@@ -22,6 +22,6 @@ def about(station, date):
 		"temp": temp
 	}
 
-app.run(debug=True)
+app.run(debug=True, port=5000)
 
 
