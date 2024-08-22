@@ -5,20 +5,11 @@
     <title>My webpage</title>
 </head>
 <body>
-    <nav>
-        <a href="/about/">About</a>
-        <a href="/contact-us/">Contact Us</a>
-        <a href="/store/">Store</a>
-    </nav>
+    <h1>Welcome To This Historical Weather App</h1>
+    <h2>Please choose a station from the list below</h2>
+    <p>URL Format: http://127.0.0.1:5000/api/v1/station/date</p>
+    <small>date must be in year month day format. E.g. 20011119</small>
+    <p>URL Example: http://127.0.0.1:5000/api/v1/10/20011119</p>
 
-    <h1>Welcome</h1>
-    <h2>This is our webpage</h2>
-    <p>Hello, this is our first webpage.</p>
-
-    <img src="{{url_for('static', 'cat.png')}}" style="width:500px">
-
-    <br>
-    <br>
-    <a href="https://google.com">Google Page</a>
 </body>
 </html>

@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 # load_dotenv()
 # ENV = os.getenv("ENV")
 
-app = Flask("Weather Data Website")
+app = Flask(__name__)
 
 
 # When the user visits the site the index.htlm file will be shown
@@ -12,13 +12,15 @@ app = Flask("Weather Data Website")
 def home():
 	return render_template("index.html")
 
-@app.route("/about/")
-def about():
-	return render_template("about.html")
-
-@app.route("/contact/")
-def contact():
-	return render_template("contact.html")
+@app.route("/api/v1/<station>/<date>")
+def about(station, date):
+	# return render_template("about.html")
+	temp = 50
+	return {
+		"station": station,
+		"date": date,
+		"temp": temp
+	}
 
 app.run(debug=True)
 
