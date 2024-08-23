@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import pandas as pd
+import numpy as np
 import os
 from dotenv import load_dotenv
 # load_dotenv()
@@ -14,13 +15,26 @@ def home():
 	return render_template("index.html")
 
 @app.route("/api/v1/<station>/<date>")
-def about(station, date):
-	# return render_template("about.html")
-	temp = 50
+def temp_data(station, date):
+	df = pd.read_csv(f"data_small/TG_STAID{station:>06}.txt", skiprows=20, parse_dates=["    DATE"])
+	df["TG_0"] = df["   TG"].mask(df["   TG"] == -9999, np.nan)
+
+	celsius = df.loc[df["    DATE"] == date]["TG_0"].squeeze() / 10
+	fahrenheit = (celsius * 1.8) + 32
+
+	celsius = celsius if not np.isnan(celsius) else "N/A"
+	fahrenheit = fahrenheit if not np.isnan(fahrenheit) else "N/A"
+
 	return {
 		"station": station,
-		"date": date,
-		"temp": temp
+		"date": {
+			"raw": date,
+			"formated_date": f"{date[:4]}-{date[4:6]}-{date[6:]}"
+		},
+		"temp": {
+			"celsius": celsius,
+			"fahrenheit": fahrenheit,
+		}
 	}
 
 app.run(debug=True, port=5000)
