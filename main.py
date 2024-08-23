@@ -9,10 +9,13 @@ from dotenv import load_dotenv
 app = Flask(__name__)
 
 
+available_stations = pd.read_csv("data_small/stations.txt", skiprows=17)
+available_stations = available_stations[["STATION ID", "STATION NAME                                 "]]
+
 # When the user visits the site the index.htlm file will be shown
 @app.route("/")
 def home():
-	return render_template("index.html")
+	return render_template("index.html", data=available_stations.to_html())
 
 @app.route("/api/v1/<station>/<date>")
 def temp_data(station, date):
